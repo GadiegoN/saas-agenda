@@ -1,4 +1,3 @@
-"use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FormLogin } from "./_components/form-login";
 import { FormRegister } from "./_components/form-register";
