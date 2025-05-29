@@ -21,6 +21,10 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const loginSchema = z.object({
   email: z
@@ -32,6 +36,8 @@ const loginSchema = z.object({
 });
 
 export function FormLogin() {
+  const router = useRouter();
+
   const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -40,8 +46,21 @@ export function FormLogin() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    console.log("Form submitted:", values);
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    await authClient.signIn.email(
+      {
+        email: values.email,
+        password: values.password,
+      },
+      {
+        onSuccess: () => {
+          router.push("/dashboard");
+        },
+        onError: () => {
+          toast.error("Erro ao fazer login. Verifique seu email e senha.");
+        },
+      },
+    );
   };
 
   return (
@@ -86,7 +105,13 @@ export function FormLogin() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Login</Button>
+            <Button type="submit" disabled={loginForm.formState.isSubmitting}>
+              {loginForm.formState.isSubmitting ? (
+                <Loader2 className="mr-2 size-4 animate-spin" />
+              ) : (
+                "Entrar"
+              )}
+            </Button>
           </form>
         </CardContent>
       </Form>
