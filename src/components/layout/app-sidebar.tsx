@@ -29,6 +29,8 @@ import {
 } from "../ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getInitials } from "@/utils/get-initials";
 
 const items = [
   {
@@ -55,6 +57,8 @@ const items = [
 
 export function AppSidebar() {
   const router = useRouter();
+  const session = authClient.useSession();
+
   const handleLogout = async () => {
     await authClient.signOut();
 
@@ -100,19 +104,28 @@ export function AppSidebar() {
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <span>Configurações</span>
+                <SidebarMenuButton className="h-20">
+                  <div className="flex items-center gap-2">
+                    <Avatar>
+                      <AvatarImage src={session?.data?.user?.image as string} />
+                      <AvatarFallback>
+                        {getInitials(session?.data?.user?.name)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col">
+                      <span className="text-lg font-semibold">
+                        {session?.data?.user?.name || "Usuário"}
+                      </span>
+                      <span className="text-md text-gray-400">
+                        {session?.data?.user?.email || "Email"}
+                      </span>
+                    </div>
+                  </div>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
                 <DropdownMenuItem onClick={handleLogout}>
                   <LogOut /> Sair
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/settings/account">Conta</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/settings/billing">Cobrança</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
