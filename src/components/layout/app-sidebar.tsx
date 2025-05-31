@@ -28,7 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/utils/get-initials";
 
@@ -58,6 +58,7 @@ const items = [
 export function AppSidebar() {
   const router = useRouter();
   const session = authClient.useSession();
+  const pathname = usePathname();
 
   const handleLogout = async () => {
     await authClient.signOut();
@@ -87,7 +88,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton isActive={pathname === item.url} asChild>
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
@@ -114,7 +115,7 @@ export function AppSidebar() {
                     </Avatar>
                     <div className="flex flex-col">
                       <span className="text-lg font-semibold">
-                        {session?.data?.user?.name || "Usuário"}
+                        {session?.data?.user?.clinic.name || "Usuário"}
                       </span>
                       <span className="text-md text-gray-400">
                         {session?.data?.user?.email || "Email"}
