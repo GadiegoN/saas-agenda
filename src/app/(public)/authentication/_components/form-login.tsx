@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -25,6 +26,7 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { GoogleIcon } from "@/components/svg/google";
 
 const loginSchema = z.object({
   email: z
@@ -46,7 +48,7 @@ export function FormLogin() {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof loginSchema>) => {
     await authClient.signIn.email(
       {
         email: values.email,
@@ -63,6 +65,13 @@ export function FormLogin() {
     );
   };
 
+  const handleGoogleSignIn = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/dashboard",
+    });
+  };
+
   return (
     <Card>
       <Form {...loginForm}>
@@ -72,7 +81,7 @@ export function FormLogin() {
         </CardHeader>
         <CardContent>
           <form
-            onSubmit={loginForm.handleSubmit(onSubmit)}
+            onSubmit={loginForm.handleSubmit(handleSubmit)}
             className="space-y-4"
           >
             <FormField
@@ -105,13 +114,22 @@ export function FormLogin() {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={loginForm.formState.isSubmitting}>
-              {loginForm.formState.isSubmitting ? (
-                <Loader2 className="mr-2 size-4 animate-spin" />
-              ) : (
-                "Entrar"
-              )}
-            </Button>
+            <CardFooter className="mt-8 flex flex-col gap-8">
+              <Button type="submit" disabled={loginForm.formState.isSubmitting}>
+                {loginForm.formState.isSubmitting ? (
+                  <Loader2 className="mr-2 size-4 animate-spin" />
+                ) : (
+                  "Entrar"
+                )}
+              </Button>
+              <Button
+                variant="outline"
+                type="button"
+                onClick={handleGoogleSignIn}
+              >
+                <GoogleIcon /> Entrar com o Google
+              </Button>
+            </CardFooter>
           </form>
         </CardContent>
       </Form>
