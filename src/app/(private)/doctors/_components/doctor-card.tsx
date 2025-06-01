@@ -104,6 +104,7 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
             <Button className="mx-auto w-11/12">Ver detalhes</Button>
           </DialogTrigger>
           <UpsertDoctorForm
+            isOpen={isUpsertDoctorDialogOpen}
             doctor={{
               ...doctor,
               availableFromTime: availability.from.format("HH:mm:ss"),
