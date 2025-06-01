@@ -35,21 +35,29 @@ export default async function Dashboard({ searchParams }: DashboardPageProps) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
+
   if (!session?.user) {
     redirect("/authentication");
   }
+
   if (!session.user.clinic) {
     redirect("/clinic-form");
   }
-  // if (!session.user.plan) {
-  //   redirect("/new-subscription");
-  // }
+
+  if (!session.user.plan) {
+    redirect("/subscription");
+  }
+
   const { from, to } = await searchParams;
+
   if (!from || !to) {
     redirect(
-      `/dashboard?from=${dayjs().format("YYYY-MM-DD")}&to=${dayjs().add(1, "month").format("YYYY-MM-DD")}`,
+      `/dashboard?from=${dayjs().format("YYYY-MM-DD")}&to=${dayjs()
+        .add(1, "month")
+        .format("YYYY-MM-DD")}`,
     );
   }
+
   const {
     totalRevenue,
     totalAppointments,

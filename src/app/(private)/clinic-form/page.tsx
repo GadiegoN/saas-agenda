@@ -19,7 +19,7 @@ export default async function ClinicFormPage() {
     redirect("/authentication");
   }
 
-  if (session.user.clinic !== null) {
+  if (session.user.clinic) {
     redirect("/dashboard");
   }
 
