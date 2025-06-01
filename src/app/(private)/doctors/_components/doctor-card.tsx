@@ -128,9 +128,9 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
                 Essa ação não pode ser revertida. Isso irá deletar o médico e
                 todas as consultas agendadas.
               </AlertDialogDescription>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancelar</AlertDialogCancel>
               <AlertDialogAction onClick={handleDeleteDoctorClick}>
                 Deletar
               </AlertDialogAction>
