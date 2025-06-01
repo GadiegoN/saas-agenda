@@ -1,3 +1,4 @@
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
@@ -109,7 +110,7 @@ export function UpsertDoctorForm({
         availableToTime: doctor?.availableToTime ?? "",
       });
     }
-  });
+  }, [isOpen, doctor, form]);
 
   const upsertDoctorAction = useAction(upsertDoctor, {
     onSuccess: () => {

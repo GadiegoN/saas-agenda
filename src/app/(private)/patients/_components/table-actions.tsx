@@ -1,3 +1,4 @@
+"use client";
 import { EditIcon, MoreVerticalIcon, TrashIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
