@@ -32,7 +32,7 @@ interface PatientsTableActionsProps {
   patient: typeof patientsTable.$inferSelect;
 }
 
-const PatientsTableActions = ({ patient }: PatientsTableActionsProps) => {
+export function PatientsTableActions({ patient }: PatientsTableActionsProps) {
   const [upsertDialogIsOpen, setUpsertDialogIsOpen] = useState(false);
 
   const deletePatientAction = useAction(deletePatient, {
@@ -101,6 +101,4 @@ const PatientsTableActions = ({ patient }: PatientsTableActionsProps) => {
       </Dialog>
     </>
   );
-};
-
-export default PatientsTableActions;
+}
