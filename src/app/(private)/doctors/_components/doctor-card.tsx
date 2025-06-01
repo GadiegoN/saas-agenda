@@ -101,7 +101,7 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
           onOpenChange={setIsUpsertDoctorDialogOpen}
         >
           <DialogTrigger asChild>
-            <Button className="w-full">Ver detalhes</Button>
+            <Button className="mx-auto w-11/12">Ver detalhes</Button>
           </DialogTrigger>
           <UpsertDoctorForm
             doctor={{
@@ -114,7 +114,7 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
         </Dialog>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="mx-auto w-11/12">
               <TrashIcon />
               Deletar médico
             </Button>
