@@ -20,7 +20,7 @@ export const getAvailableTimes = actionClient
   .schema(
     z.object({
       doctorId: z.string(),
-      date: z.string().date(), // YYYY-MM-DD,
+      date: z.string().date(),
     }),
   )
   .action(async ({ parsedInput }) => {
