@@ -1,10 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
+import { NumericFormat } from "react-number-format";
 import { toast } from "sonner";
 import { z } from "zod";
-import { useAction } from "next-safe-action/hooks";
+
+import { upsertDoctor } from "@/actions/upsert-doctor";
 import { Button } from "@/components/ui/button";
-import { NumericFormat } from "react-number-format";
 import {
   DialogContent,
   DialogDescription,
@@ -21,9 +23,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-import { doctorsTable } from "@/db/schema";
-
 import {
   Select,
   SelectContent,
@@ -33,8 +32,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { doctorsTable } from "@/db/schema";
+
 import { medicalSpecialties } from "../_constants";
-import { upsertDoctor } from "@/actions/upsert-doctor";
 
 const formSchema = z
   .object({
@@ -72,7 +72,7 @@ interface UpsertDoctorFormProps {
   onSuccess?: () => void;
 }
 
-const UpsertDoctorForm = ({ doctor, onSuccess }: UpsertDoctorFormProps) => {
+export function UpsertDoctorForm({ doctor, onSuccess }: UpsertDoctorFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     shouldUnregister: true,
     resolver: zodResolver(formSchema),
@@ -393,6 +393,4 @@ const UpsertDoctorForm = ({ doctor, onSuccess }: UpsertDoctorFormProps) => {
       </Form>
     </DialogContent>
   );
-};
-
-export default UpsertDoctorForm;
+}
