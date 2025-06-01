@@ -115,7 +115,9 @@ export function AppSidebar() {
                     </Avatar>
                     <div className="flex flex-col">
                       <span className="text-lg font-semibold">
-                        {session?.data?.user?.clinic.name || "Usuário"}
+                        {session?.data?.user?.clinic != null
+                          ? session?.data?.user?.clinic.name
+                          : "Usuário"}
                       </span>
                       <span className="text-md text-gray-400">
                         {session?.data?.user?.email || "Email"}

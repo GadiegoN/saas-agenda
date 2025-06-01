@@ -35,8 +35,6 @@ export function FormComponent() {
     try {
       await createClinic(values.name);
       toast.success("Clínica criada com sucesso!");
-      form.reset();
-
       redirect("/dashboard");
     } catch (err) {
       if (isRedirectError(err)) {
@@ -46,6 +44,10 @@ export function FormComponent() {
       toast.error("Erro ao criar clínica. Tente novamente.");
     }
   };
+
+  if (form.formState.isSubmitSuccessful) {
+    window.location.reload();
+  }
 
   return (
     <Form {...form}>

@@ -2,9 +2,6 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { SignOutButton } from "./_components/sign-out-button";
-import { db } from "@/db";
-import { eq } from "drizzle-orm";
-import { usersToClinicsTable } from "@/db/schema";
 import { getInitials } from "@/utils/get-initials";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -17,11 +14,7 @@ export default async function DashboardPage() {
     redirect("/authentication");
   }
 
-  const clinics = await db.query.usersToClinicsTable.findMany({
-    where: eq(usersToClinicsTable.userId, session.user.id),
-  });
-
-  if (clinics.length === 0) {
+  if (session.user.clinic === null) {
     redirect("/clinic-form");
   }
 
