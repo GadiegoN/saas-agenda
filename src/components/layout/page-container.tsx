@@ -25,5 +25,5 @@ export function PageActions({ children }: { children: React.ReactNode }) {
 }
 
 export function PageContent({ children }: { children: React.ReactNode }) {
-  return <div className="space-y-6">{children}</div>;
+  return <div className="space-y-6 pb-10">{children}</div>;
 }
